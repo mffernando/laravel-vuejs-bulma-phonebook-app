@@ -11,6 +11,8 @@
   </head>
   <body>
         <div id="app">
+          <PageHeader></PageHeader>
+          <PageFooter></PageFooter>
         </div>
 
         <script src="{{ asset('js/app.js') }}"></script>

@@ -15,11 +15,10 @@ window.Vue = require('vue');
  * or customize the JavaScript scaffolding to fit your unique needs.
  */
 
-Vue.component('example-component', require('./components/ExampleComponent.vue'));
+let pageheader = require('./components/PageHeader.vue');
+let pagefooter = require('./components/PageFooter.vue');
 
 const app = new Vue({
     el: '#app',
-    created(){
-      console.log('Hello World')
-    }
+    components:{pageheader, pagefooter}, //page header
 });
