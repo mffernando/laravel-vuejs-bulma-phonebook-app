@@ -11,10 +11,14 @@
   </head>
   <body>
         <div id="app">
-          <PageHeader></PageHeader>
-          <PageFooter></PageFooter>
-        </div>
 
+          <PageHeader></PageHeader>
+            <div class="container">
+              <router-view></router-view>
+            </div>
+          <PageFooter></PageFooter>
+
+        </div>
         <script src="{{ asset('js/app.js') }}"></script>
   </body>
 </html>

@@ -14,3 +14,8 @@
 Route::get('/', function () {
     return view('phonebook');
 });
+
+//refresh page return to /
+Route::get('/{name}', function () {
+  return redirect('/');
+})->where('name', '[A-Za-z]+');
