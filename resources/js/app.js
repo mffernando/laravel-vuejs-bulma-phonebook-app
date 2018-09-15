@@ -27,6 +27,7 @@ let pageheader = require('./components/PageHeader.vue');
 let pagefooter = require('./components/PageFooter.vue');
 let home = require('./components/Home.vue');
 let about = require('./components/About.vue');
+//let add = require('./components/Add.vue');
 
 /**
   * Each route should map to a component. The "component" can
@@ -47,7 +48,7 @@ const routes = [
   */
 
 const router = new VueRouter({
-  mode: 'history', //remove # in URL
+  //mode: 'history', //remove # in URL
   routes // short for `routes: routes`
 })
 
