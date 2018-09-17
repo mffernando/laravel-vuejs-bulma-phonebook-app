@@ -46339,8 +46339,15 @@ var update = __webpack_require__(52);
       //console.log(this.searchQuery);
       if (this.searchQuery.length > 0) {
         this.tempQuery = this.lists.filter(function (item) {
-          //console.log(index);
-          return item.name.toLowerCase().indexOf(_this.searchQuery.toLowerCase()) > -1;
+          return Object.keys(item).some(function (key) {
+            var string = String(item[key]);
+            return string.toLowerCase().indexOf(_this.searchQuery.toLowerCase()) > -1;
+            //console.log(string);
+          });
+          //console.log(Object.keys(item));
+          //return (
+          //item.name.toLowerCase().indexOf(this.searchQuery.toLowerCase()) > -1
+          //);
         });
         //console.log(result);
       } else {
@@ -46366,13 +46373,13 @@ var update = __webpack_require__(52);
     openShow: function openShow(key) {
       //console.log(this.$children[1]);
       //childre[1] ->   <show :openmodal='showActive' @closeRequest='close'></show>
-      this.$children[1].list = this.lists[key];
+      this.$children[1].list = this.tempQuery[key];
       this.showActive = "is-active";
     },
     openUpdate: function openUpdate(key) {
       //console.log(this.$children[1]);
       //children[2] -> <update :openmodal='updateActive' @closeRequest='close'></update>
-      this.$children[2].list = this.lists[key];
+      this.$children[2].list = this.tempQuery[key];
       this.updateActive = "is-active";
     },
     openDelete: function openDelete(key, id) {

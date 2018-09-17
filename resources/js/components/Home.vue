@@ -62,10 +62,17 @@ export default {
       //console.log(this.searchQuery);
       if (this.searchQuery.length > 0) {
         this.tempQuery = this.lists.filter(item => {
-          //console.log(index);
-          return (
-            item.name.toLowerCase().indexOf(this.searchQuery.toLowerCase()) > -1
-          );
+          return Object.keys(item).some(key => {
+            let string = String(item[key]);
+            return (
+              string.toLowerCase().indexOf(this.searchQuery.toLowerCase()) > -1
+            );
+            //console.log(string);
+          });
+          //console.log(Object.keys(item));
+          //return (
+          //item.name.toLowerCase().indexOf(this.searchQuery.toLowerCase()) > -1
+          //);
         });
         //console.log(result);
       } else {
@@ -87,13 +94,13 @@ export default {
     openShow(key) {
       //console.log(this.$children[1]);
       //childre[1] ->   <show :openmodal='showActive' @closeRequest='close'></show>
-      this.$children[1].list = this.lists[key];
+      this.$children[1].list = this.tempQuery[key];
       this.showActive = "is-active";
     },
     openUpdate(key) {
       //console.log(this.$children[1]);
       //children[2] -> <update :openmodal='updateActive' @closeRequest='close'></update>
-      this.$children[2].list = this.lists[key];
+      this.$children[2].list = this.tempQuery[key];
       this.updateActive = "is-active";
     },
     openDelete(key, id) {
