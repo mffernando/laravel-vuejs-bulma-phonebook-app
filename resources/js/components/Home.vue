@@ -6,6 +6,9 @@
         <button class="button is-link is-outlined" @click="openAdd">
           New
         </button>
+        <span class="is-pulled-right" v-if="loading">
+            <i class="fa fa-refresh fa-spin fa-2x fa-fw"></i>
+        </span>
       </p>
       <div class="panel-block">
         <p class="control has-icons-left">
@@ -20,7 +23,7 @@
           {{ item.name }}
         </span>
         <span class="panel-icon column is-1">
-          <i class="has-text-danger fa fa-trash" aria-hidden="true"></i>
+          <i class="has-text-danger fa fa-trash" aria-hidden="true" @click="openDelete(key, item.id)"></i>
         </span>
         <span class="panel-icon column is-1">
           <i class="has-text-info fa fa-edit" aria-hidden="true" @click="openUpdate(key)"></i>
@@ -48,7 +51,8 @@ export default {
       showActive: "",
       updateActive: "",
       lists: {},
-      errors: {}
+      errors: {},
+      loading: false
     };
   },
   mounted() {
@@ -73,6 +77,19 @@ export default {
       //children[2] -> <update :openmodal='updateActive' @closeRequest='close'></update>
       this.$children[2].list = this.lists[key];
       this.updateActive = "is-active";
+    },
+    openDelete(key, id) {
+      //delete confirmation
+      if (confirm("Are you sure?")) {
+        this.loading = !this.loading; //true, show loading icon
+        axios
+          .delete(`/phonebook/${id}`, this.$data.list)
+          .then(response => {
+            this.lists.splice(key, 1);
+            this.loading = !this.loading; //false, hide loading icon
+          })
+          .catch(error => (this.errors = error.response.data.errors));
+      }
     },
     //close window
     close() {
