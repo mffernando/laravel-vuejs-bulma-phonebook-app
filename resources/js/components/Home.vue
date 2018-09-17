@@ -12,13 +12,13 @@
       </p>
       <div class="panel-block">
         <p class="control has-icons-left">
-          <input class="input is-small" type="text" placeholder="search">
+          <input class="input is-small" type="text" placeholder="search" v-model="searchQuery">
           <span class="icon is-small is-left">
-            <i class="fas fa-search" aria-hidden="true"></i>
+            <i class="fa fa-search" aria-hidden="true"></i>
           </span>
         </p>
       </div>
-      <a class="panel-block" v-for="item, key in lists">
+      <a class="panel-block" v-for="item, key in tempQuery">
         <span class="column is-9">
           {{ item.name }}
         </span>
@@ -52,14 +52,32 @@ export default {
       updateActive: "",
       lists: {},
       errors: {},
-      loading: false
+      loading: false,
+      searchQuery: "",
+      tempQuery: ""
     };
+  },
+  watch: {
+    searchQuery() {
+      //console.log(this.searchQuery);
+      if (this.searchQuery.length > 0) {
+        this.tempQuery = this.lists.filter(item => {
+          //console.log(index);
+          return (
+            item.name.toLowerCase().indexOf(this.searchQuery.toLowerCase()) > -1
+          );
+        });
+        //console.log(result);
+      } else {
+        this.tempQuery = this.lists;
+      }
+    }
   },
   mounted() {
     //console.log("working");
     axios
-      .post("/getData", this.$data.list)
-      .then(response => (this.lists = response.data))
+      .post("/getData")
+      .then(response => (this.lists = this.tempQuery = response.data))
       .catch(error => (this.errors = error.response.data.errors));
   },
   methods: {
