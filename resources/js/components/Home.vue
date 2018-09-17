@@ -15,9 +15,9 @@
           </span>
         </p>
       </div>
-      <a class="panel-block">
+      <a class="panel-block" v-for="item, key in lists">
         <span class="column is-9">
-          abc
+          {{ item.name }}
         </span>
         <span class="panel-icon column is-1">
           <i class="has-text-danger fa fa-trash" aria-hidden="true"></i>
@@ -35,21 +35,30 @@
 </template>
 
 <script>
-let add = require('./Add.vue');
-  export default{
-    components:{add},
-    data(){
-      return{
-        addActive : ''
-      }
+let add = require("./Add.vue");
+export default {
+  components: { add },
+  data() {
+    return {
+      addActive: "",
+      lists: {},
+      errors: {}
+    };
+  },
+  mounted() {
+    //console.log("working");
+    axios
+      .post("/getData", this.$data.list)
+      .then(response => (this.lists = response.data))
+      .catch(error => (this.errors = error.response.data.errors));
+  },
+  methods: {
+    openAdd() {
+      this.addActive = "is-active";
     },
-    methods:{
-      openAdd(){
-        this.addActive = 'is-active';
-      },
-      close(){
-        this.addActive ='';
-      }
+    close() {
+      this.addActive = "";
     }
   }
+};
 </script>

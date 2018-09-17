@@ -19,6 +19,15 @@ class PhonebookController extends Controller
     }
 
     /**
+     * Get data order by name
+     *
+     */
+    public function getData()
+    {
+        return Phonebook::orderBy('name', 'DESC')->get();
+    }
+
+    /**
      * Show the form for creating a new resource.
      *
      * @return \Illuminate\Http\Response
@@ -38,10 +47,11 @@ class PhonebookController extends Controller
     {
         //return $request->all();
         $pb = new Phonebook;
-        $pb = $request->name;
-        $pb = $request->phone;
-        $pb = $request->email;
+        $pb->name = $request->name;
+        $pb->phone = $request->phone;
+        $pb->email = $request->email;
         $pb->save();
+        return $pb;
     }
 
     /**

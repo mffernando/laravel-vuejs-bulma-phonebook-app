@@ -22,3 +22,4 @@ Route::get('/phonebook/{name}', function () {
 
 //phonebook CRUD route
 Route::resource('phonebook', 'PhonebookController');
+Route::post('getData', 'PhonebookController@getData');
