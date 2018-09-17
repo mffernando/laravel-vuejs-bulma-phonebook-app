@@ -24,7 +24,7 @@ class PhonebookController extends Controller
      */
     public function getData()
     {
-        return Phonebook::orderBy('name', 'DESC')->get();
+        return Phonebook::orderBy('name', 'ASC')->get();
     }
 
     /**
@@ -83,9 +83,14 @@ class PhonebookController extends Controller
      * @param  \App\Phonebook  $phonebook
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Phonebook $phonebook)
+    public function update(PhonebookRequest $request)
     {
-        //
+        //return $request->all();
+        $pb = Phonebook::find($request->id);
+        $pb->name = $request->name;
+        $pb->phone = $request->phone;
+        $pb->email = $request->email;
+        $pb->save();
     }
 
     /**
